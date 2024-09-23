@@ -2,14 +2,20 @@ import React from "react";
 import { useState , useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html, useGLTF } from "@react-three/drei";
-import  FrontModal from "./components/frontmodal"
+import FrontModal from "../../../frontmodal.tsx";
+
 
 export default function Front(props) {
     const { nodes, materials } = useGLTF('/lamborgini_urus.glb')
     const [active , setActive]  = useState(false);
     const ref = useRef(null);
+    const data= {
+        header:"Front",
+        lable1: "Front damage",
+        lable2: "Front Cost",
+    }
 
-      useFrame((_state , delta) => {
+      useFrame(() => {
         if (active === true) {
           for (let index = ref.current.position.y; index < -2.235 ; index++) {
             ref.current.position.y += 0.004;
@@ -24,11 +30,11 @@ export default function Front(props) {
     return (
       <>
       <Html>
-        <FrontModal active={active}/>
+        <FrontModal active={active} data={data}/>
       </Html>
         <mesh
           ref={ref}
-          onClick={() => {console.log("Front"); setActive(!active);}}
+          onClick={() => {setActive(!active);}}
           castShadow
           receiveShadow
           geometry={nodes.Object_165.geometry}

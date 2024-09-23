@@ -86,3 +86,50 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.modal{
+  width: 700px;
+  height: 400px;
+  background: #000;
+  position: absolute;
+  left: -90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+input {
+  width: 300px;
+  height: 20px;
+  padding: 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+
+}
+
+.deactive {
+  display: none;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-text div {
+  color: #000000;
+}
+
+
+span {
+  font-size: 44px;
+  color:#f9f9f9;
+  cursor: pointer;
+
+}

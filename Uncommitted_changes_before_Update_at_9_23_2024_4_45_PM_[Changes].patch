@@ -1,0 +1,312 @@
+Subject: [PATCH] Uncommitted changes before Update at 9/23/2024 4:45 PM [Changes]
+---
+Index: src/index.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/index.css b/src/index.css
+--- a/src/index.css	
++++ b/src/index.css	
+@@ -86,3 +86,50 @@
+     background-color: #f9f9f9;
+   }
+ }
++
++
++.modal{
++  width: 700px;
++  height: 400px;
++  background: #000;
++  position: absolute;
++  left: -90px;
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  padding: 10px;
++}
++
++input {
++  width: 300px;
++  height: 20px;
++  padding: 15px;
++  margin: 10px;
++  border: none;
++  border-radius: 4px;
++
++}
++
++.deactive {
++  display: none;
++}
++
++.header-text {
++  display: flex;
++  flex-direction: row;
++  align-items: center;
++  justify-content: space-between;
++  width: 100%;
++}
++
++.header-text div {
++  color: #000000;
++}
++
++
++span {
++  font-size: 44px;
++  color:#f9f9f9;
++  cursor: pointer;
++
++}
+\ No newline at end of file
+Index: src/components/model/components/front/front.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/model/components/front/front.jsx b/src/components/model/components/front/front.jsx
+--- a/src/components/model/components/front/front.jsx	
++++ b/src/components/model/components/front/front.jsx	
+@@ -2,14 +2,20 @@
+ import { useState , useRef } from "react";
+ import { useFrame } from "@react-three/fiber";
+ import { Html, useGLTF } from "@react-three/drei";
+-import  FrontModal from "./components/frontmodal"
++import FrontModal from "../../../frontmodal.tsx";
++
+ 
+ export default function Front(props) {
+     const { nodes, materials } = useGLTF('/lamborgini_urus.glb')
+     const [active , setActive]  = useState(false);
+     const ref = useRef(null);
++    const data= {
++        header:"Front",
++        lable1: "Front damage",
++        lable2: "Front Cost",
++    }
+ 
+-      useFrame((_state , delta) => {
++      useFrame(() => {
+         if (active === true) {
+           for (let index = ref.current.position.y; index < -2.235 ; index++) {
+             ref.current.position.y += 0.004;
+@@ -24,11 +30,11 @@
+     return (
+       <>
+       <Html>
+-        <FrontModal active={active}/>
++        <FrontModal active={active} data={data}/>
+       </Html>
+         <mesh
+           ref={ref}
+-          onClick={() => {console.log("Front"); setActive(!active);}}
++          onClick={() => {setActive(!active);}}
+           castShadow
+           receiveShadow
+           geometry={nodes.Object_165.geometry}
+Index: src/components/model/model3d.jsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/model/model3d.jsx b/src/components/model/model3d.jsx
+--- a/src/components/model/model3d.jsx	
++++ b/src/components/model/model3d.jsx	
+@@ -2,6 +2,7 @@
+ import { useGLTF } from '@react-three/drei'
+ import { useFrame } from '@react-three/fiber';
+ import Front from './components/front/front';
++import Roof from "./components/roof/roof.jsx";
+ 
+ export default function Model(props) {
+   const { nodes, materials } = useGLTF('/lamborgini_urus.glb')
+@@ -723,15 +724,7 @@
+           scale={0.05}
+         />
+         <Front props={props} />
+-        <mesh
+-          castShadow
+-          receiveShadow
+-          geometry={nodes.Object_167.geometry}
+-          material={materials.WhiteCar}
+-          position={[-0.037, -2.535, 2.677]}
+-          rotation={[-Math.PI / 2, 0, Math.PI]}
+-          scale={0.05}
+-        />
++        <Roof/>
+       </group>
+     </group>
+   )
+Index: src/components/model/components/front/components/test.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/model/components/front/components/test.css b/src/components/model/components/front/components/test.css
+deleted file mode 100644
+--- a/src/components/model/components/front/components/test.css	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-.modal{
+-    width: 400px;
+-    height: 400px;
+-    background: #000;
+-}
+-
+-.deactive {
+-    display: none;
+-}
+\ No newline at end of file
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	
++++ b/package.json	
+@@ -14,6 +14,7 @@
+     "@react-three/fiber": "^8.17.7",
+     "react": "^18.3.1",
+     "react-dom": "^18.3.1",
++    "react-icons": "^5.3.0",
+     "three": "^0.168.0"
+   },
+   "devDependencies": {
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package-lock.json b/package-lock.json
+--- a/package-lock.json	
++++ b/package-lock.json	
+@@ -12,6 +12,7 @@
+         "@react-three/fiber": "^8.17.7",
+         "react": "^18.3.1",
+         "react-dom": "^18.3.1",
++        "react-icons": "^5.3.0",
+         "three": "^0.168.0"
+       },
+       "devDependencies": {
+@@ -3372,6 +3373,15 @@
+         "react": "^18.3.1"
+       }
+     },
++    "node_modules/react-icons": {
++      "version": "5.3.0",
++      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-5.3.0.tgz",
++      "integrity": "sha512-DnUk8aFbTyQPSkCfF8dbX6kQjXA9DktMeJqfjrg6cK9vwQVMxmcA3BfP4QoiztVmEHtwlTgLFsPuH2NskKT6eg==",
++      "license": "MIT",
++      "peerDependencies": {
++        "react": "*"
++      }
++    },
+     "node_modules/react-is": {
+       "version": "16.13.1",
+       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+Index: src/components/model/components/front/components/frontmodal.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/model/components/front/components/frontmodal.tsx b/src/components/model/components/front/components/frontmodal.tsx
+--- a/src/components/model/components/front/components/frontmodal.tsx	
++++ b/src/components/model/components/front/components/frontmodal.tsx	
+@@ -1,6 +1,4 @@
+ import { useEffect, useState } from "react";
+-import "./test.css";
+-import Background from "three/src/renderers/common/Background.js";
+ 
+ export default function FrontModal(props) {
+     const modalactive = props.active;
+Index: src/components/frontmodal.tsx
+===================================================================
+diff --git a/src/components/frontmodal.tsx b/src/components/frontmodal.tsx
+new file mode 100644
+--- /dev/null	
++++ b/src/components/frontmodal.tsx	
+@@ -0,0 +1,26 @@
++import { useEffect, useState } from "react";
++import { FaSkullCrossbones } from "react-icons/fa6";
++
++
++export default function FrontModal(props) {
++    const modalactive = props.active;
++    const [modal , setModal] = useState(modalactive);
++    useEffect(() =>  {
++        setModal(modalactive) 
++    },[modalactive]);
++    
++   return (    
++     <>
++     <div className={modal ? "modal" :  "deactive"}>
++         <div className={"header-text"}>
++             <div>hello</div>
++             <h1>{props.data.header}</h1>
++             <span><FaSkullCrossbones/></span>
++         </div>
++         <input type="text" id={"lable1"} placeholder={props.data.lable1}/>
++         <input type="text" id={"lable2"} placeholder={props.data.lable2}/>
++         <button>Submit</button>
++     </div>
++     </>
++    )
++}
+\ No newline at end of file
+Index: src/components/model/components/roof/roof.jsx
+===================================================================
+diff --git a/src/components/model/components/roof/roof.jsx b/src/components/model/components/roof/roof.jsx
+new file mode 100644
+--- /dev/null	
++++ b/src/components/model/components/roof/roof.jsx	
+@@ -0,0 +1,47 @@
++import React from "react";
++import { useState , useRef } from "react";
++import { useFrame } from "@react-three/fiber";
++import { Html, useGLTF } from "@react-three/drei";
++import FrontModal from "../../../frontmodal.tsx";
++export default function Roof(props) {
++    const { nodes, materials } = useGLTF('/lamborgini_urus.glb')
++    const [active , setActive]  = useState(false);
++    const ref = useRef(null);
++    const data= {
++        header:"Roof",
++        lable1: "Roof damage",
++        lable2: "Roof Cost",
++    }
++    useFrame(() => {
++        if (active === true) {
++            for (let index = ref.current.position.y; index < -2.235 ; index++) {
++                ref.current.position.y += 0.004;
++            }
++        } else {
++            for (let i = ref.current.position.y; i >= -2.535; i--) {
++                ref.current.position.y += -0.004;
++            }
++        }
++    })
++
++    return (
++        <>
++            <Html>
++                <FrontModal active={active} data={data}/>
++            </Html>
++            <mesh
++                ref={ref}
++                onClick={() => {setActive(!active)}}
++                castShadow
++                receiveShadow
++                geometry={nodes.Object_167.geometry}
++                material={materials.WhiteCar}
++                position={[-0.037, -2.535, 2.677]}
++                rotation={[-Math.PI / 2, 0, Math.PI]}
++                scale={0.05}
++            />
++
++        </>
++
++    )
++}
+\ No newline at end of file

@@ -2,6 +2,7 @@ import React, { act, useRef , useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber';
 import Front from './components/front/front';
+import Roof from "./components/roof/roof.jsx";
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF('/lamborgini_urus.glb')
@@ -723,15 +724,7 @@ export default function Model(props) {
           scale={0.05}
         />
         <Front props={props} />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_167.geometry}
-          material={materials.WhiteCar}
-          position={[-0.037, -2.535, 2.677]}
-          rotation={[-Math.PI / 2, 0, Math.PI]}
-          scale={0.05}
-        />
+        <Roof/>
       </group>
     </group>
   )
